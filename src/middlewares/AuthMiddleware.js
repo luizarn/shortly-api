@@ -9,7 +9,7 @@ export async function SignUpValidation(req, res, next) {
 
   if (error) {
     const errorsMessage = error.details.map(detail => detail.message)
-    return res.status(409).send(errorsMessage)
+    return res.status(422).send(errorsMessage)
   }
 
   const checkUser = await db.query('SELECT * FROM users WHERE email =$1', [user.email])
