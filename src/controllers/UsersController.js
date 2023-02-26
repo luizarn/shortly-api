@@ -4,7 +4,6 @@ export async function getUrlsByUser(req, res) {
     const { authorization } = req.headers
     const token = authorization?.replace("Bearer ", '')
 
-    
     const user = res.locals.user
 
     try {
@@ -49,6 +48,40 @@ export async function getUrlsByUser(req, res) {
         visitCount,
         shortenedUrls: urls,
       }
+  
+      res.send(result)
+    } catch (error) {
+      res.status(500).send(error.message)
+    }
+  }
+
+  export async function getRanking(req, res) {
+    const { authorization } = req.headers
+    const token = authorization?.replace("Bearer ", '')
+
+    const user = res.locals.user
+
+    try {
+        const { rows } = await db.query(`
+        SELECT 
+          users.id AS id,
+          users.name AS name,
+          COUNT(urls.id) AS "linksCount",
+          SUM(urls.visit_count) AS "visitCount"
+        FROM urls
+        JOIN users
+          ON urls.id_user = users.id  
+        GROUP BY users.id
+        ORDER BY "visitCount" DESC
+        LIMIT 10
+      `)
+  
+      const result = rows.map(({ id, name, linksCount, visitCount }) => ({
+        id: id,
+        name: name,
+        linksCount: linksCount,
+        visitCount: visitCount,
+      }))
   
       res.send(result)
     } catch (error) {
