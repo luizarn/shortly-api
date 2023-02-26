@@ -3,9 +3,11 @@ import { urlSchema } from '../schemas/UrlSchema.js'
 
 
 export async function UrlValidation(req, res, next) {
-  const url = req.body
+  const url = req.body.url
 
-  const { error } = urlSchema.validate(url, { abortEarly: false })
+  console.log(url)
+
+  const { error } = urlSchema.validate({url} , { abortEarly: false })
 
   if (error) {
     const errorsMessage = error.details.map(detail => detail.message)
@@ -13,6 +15,8 @@ export async function UrlValidation(req, res, next) {
   }
 
   res.locals.url = url
+
+  
 
   next()
 }

@@ -33,8 +33,9 @@ export async function getUrlById(req, res) {
 
     if (idUrl.rowCount === 0) return res.sendStatus(404)
 
-    res.send({id: idUrl.rows[0].id, shortUrl: idUrl.rows[0].short_url, url: idUrl.rows[0].url})
+    res.send({id: idUrl.rows[0].id, shortUrl: idUrl.rows[0].short_url, "url": idUrl.rows[0].url})
   } catch (error) {
     res.status(500).send(error.message)
   }
 }
+
