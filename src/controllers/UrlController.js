@@ -60,10 +60,18 @@ export async function deleteUrl(req, res) {
 
   const { id } = req.params
 
+  const user = res.locals.user
+
   try {
+
+    
     const { rowCount } = await db.query('SELECT * FROM urls WHERE id=$1', [id])
 
     if (rowCount === 0) return res.sendStatus(404)
+
+    const userUrl = await db.query('SELECT * FROM urls WHERE id=$1 AND id_user=$2', [id, user.rows[0].id])
+
+    if (userUrl.rowCount === 0) return res.sendStatus(401)
 
     await db.query("DELETE FROM urls WHERE id=$1", [id])
 
