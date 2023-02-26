@@ -53,3 +53,22 @@ export async function goToUrlById(req, res) {
     res.status(500).send(error.message)
   }
 }
+
+export async function deleteUrl(req, res) {
+  const { authorization } = req.headers
+  const token = authorization?.replace("Bearer ", '')
+
+  const { id } = req.params
+
+  try {
+    const { rowCount } = await db.query('SELECT * FROM urls WHERE id=$1', [id])
+
+    if (rowCount === 0) return res.sendStatus(404)
+
+    await db.query("DELETE FROM urls WHERE id=$1", [id])
+
+    res.sendStatus(204)
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
