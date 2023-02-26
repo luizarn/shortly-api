@@ -6,6 +6,8 @@ export async function createUrlShorten(req, res) {
     const token = authorization?.replace("Bearer ", '')
 
     const url = res.locals.url
+
+    console.log(url)
     const user = res.locals.user
 
     const shortUrl = nanoid(8)
@@ -21,3 +23,18 @@ export async function createUrlShorten(req, res) {
     }
   }
   
+
+export async function getUrlById(req, res) {
+  const { id } = req.params
+  try {
+    const idUrl = await db.query('SELECT * FROM urls WHERE id=$1', [id])
+
+    console.log(idUrl)
+
+    if (idUrl.rowCount === 0) return res.sendStatus(404)
+
+    res.send({id: idUrl.rows[0].id, shortUrl: idUrl.rows[0].short_url, url: idUrl.rows[0].url})
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+}
