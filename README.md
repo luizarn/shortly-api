@@ -1,5 +1,5 @@
 ## Shortly
-Bem-vindo ao Shortly! Este é uma API de encurtamento de URLs que permite transformar URLs longas em URLs curtas e fáceis de compartilhar. Com o Shortly, você pode simplificar suas URLs longas e acompanhar o número de cliques em cada URL encurtada.
+Bem-vindo ao Shortly! Esta é uma API de encurtamento de URLs que permite transformar URLs longas em URLs curtas e fáceis de compartilhar. Com o Shortly, você pode simplificar suas URLs longas e acompanhar o número de cliques em cada URL encurtada.
 
 <p align="center">
   <img width="800" height="400" src="assets/shortly.gif">
