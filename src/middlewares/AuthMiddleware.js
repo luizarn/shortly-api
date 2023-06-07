@@ -43,7 +43,7 @@ export async function SignInValidation(req, res, next) {
          
         } catch (error) {
           console.error(error)
-          return res.status(500).send('Houve um problema no servidor')
+          return res.status(500).send(error)
         }
         next()
       }
@@ -66,7 +66,7 @@ export async function authRoutesValidation(req, res, next) {
   
     } catch (error) {
       console.erro(error)
-      res.status(500).send("Houve um problema no servidor")
+      res.status(500).send(error)
     }
   
     next()
